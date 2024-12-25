@@ -1,0 +1,33 @@
+{
+    "errors": {
+        "loginAuthErr": "Неверные имя пользователя или пароль",
+        "signupUserUnique": "Такой пользователь уже существует",
+        "validation": {
+            "required": "Обязательное поле",
+            "usernameMinMaxLength": "От 3 до 20 символов",
+            "passwdMinLength": "Не менее 6 символов",
+            "confirmPasswdConfirm": "Пароли должны совпадать",
+            "unique": "Должно быть уникальным"
+        },
+        "error": "Ошибка",
+        "authErr": "Ошибка авторизации",
+        "signupErr": "Ошибка регистрации"
+    },
+    "navbar": {
+        "logo": "SeafarerDOC",
+        "logout": "Выйти"
+    },
+    "login": {
+        "enter": "Войти",
+        "yourNickname": "Ваш ник",
+        "password": "Пароль",
+        "doYouHaveAccount": "Нет аккаунта?",
+        "signup": "Регистрация"
+    },
+    "signup": {
+        "username": "Имя пользователя",
+        "confirmPasswd": "Подтвердите пароль",
+        "signup": "Зарегистрироваться",
+        "input": "Вход"
+    }
+}
