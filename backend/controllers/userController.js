@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
+  console.log('Получено значение username:', req.body.username);
+  console.log('Получено значение password:', req.body.password);
+
   const { username, password, role } = req.body;
 
   if (!username || !password) {
@@ -15,12 +18,18 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Сохранение пользователя в базе данных
-    const result = await pool.query(
-      'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING *',
-      [username, hashedPassword, role || 'user']
-    );
+    const result = await pool.query('INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING *', [username, hashedPassword, role || 'user']);
 
-    res.status(201).json({ message: 'User registered successfully', user: result.rows[0] });
+    const newUser = result.rows[0];
+
+    // Генерация JWT
+    const token = jwt.sign({ userId: newUser.id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: { id: newUser.id, username: newUser.username, role: newUser.role },
+      token,
+    });
   } catch (err) {
     console.error('Ошибка при регистрации пользователя:', err.message);
     res.status(500).json({ error: 'Ошибка при регистрации пользователя' });
@@ -52,11 +61,7 @@ exports.login = async (req, res) => {
     }
 
     // Генерация JWT
-    const token = jwt.sign(
-      { userId: user.id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {

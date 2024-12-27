@@ -8,7 +8,11 @@ const app = express();
 
 // Middleware
 // Разрешает кросс-доменные запросы
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Клиентский адрес
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
+  allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+}));
 // Позволяет серверу понимать и обрабатывать JSON-запросы
 app.use(express.json());
 
@@ -18,12 +22,38 @@ app.use(express.json());
 app.use('/api', routes);
 app.use('/auth', userRoutes);
 
+// Установка лимита на тело запроса
+app.use(express.json({ limit: '50kb' }));
+// Для данных, закодированных в URL
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+
+// Обработка ошибок в middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Что-то пошло не так!' });
+});
+
+// Middleware для логирования всех запросов на сервере
+app.use((req, res, next) => {
+  console.log(`Запрос: ${req.method} ${req.url}`);
+  console.log('Заголовки:', req.headers);
+  console.log('Тело запроса:', req.body);
+  next();
+});
+
+// Middleware для проверки объёма cookies, которые передаются серверу
+app.use((req, res, next) => {
+  console.log('Cookie:', req.headers.cookie);
+  next();
+});
+
+
 app.get('/', (req, res) => {
   res.send('Добро пожаловать на сервер!');
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 // Запуск сервера
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
