@@ -10,6 +10,7 @@ import {
   setAuthorized, login, clearAuthError, getAuthError,
 } from '../features/authSlice';
 // import { showNotification } from '../DefaulltComponents/NotificationComponent';
+import './Signup.css';
 import routes from '../routes';
 
 const LoginForm = () => {
@@ -70,11 +71,11 @@ const LoginForm = () => {
                 </h1>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formUsername" className="position-relative mb-4">
-                    <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} required placeholder=" " style={{ height: '50px' }} isInvalid={!!error} />
+                    <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} required placeholder=" " style={{ height: '55px' }} isInvalid={!!error} />
                     <Form.Label className="placeholder1">{t('login.yourNickname')}</Form.Label>
                   </Form.Group>
                   <Form.Group controlId="formPassword" className="position-relative mb-4">
-                    <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder=" " style={{ height: '50px' }} isInvalid={!!error} />
+                    <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder=" " style={{ height: '55px' }} isInvalid={!!error} />
                     <Form.Label className="placeholder1">{t('login.password')}</Form.Label>
                     {error ? (
                       <Form.Control.Feedback type="invalid" className="position-absolute" style={{ top: '100%', margin: 0 }}>

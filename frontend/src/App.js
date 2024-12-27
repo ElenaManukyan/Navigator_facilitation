@@ -10,6 +10,7 @@ import Login from './pages/Login';
 // import NavbarComponent from './DefaulltComponents/Navbar';
 import { setAuthorized, getToken } from './features/authSlice';
 import routes from './routes';
+import Signup from './pages/Signup';
 
 // Создаю кастомный history
 const customHistory = createBrowserHistory();
@@ -17,6 +18,9 @@ const customHistory = createBrowserHistory();
 const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(getToken);
+
+  // localStorage.removeItem('token');
+  console.log(`token= ${token}`);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -40,9 +44,10 @@ const App = () => {
       <Routes>
         <Route
           path={routes.main()}
-          element={token ? <h1>Нет токена!</h1> : <Navigate to={routes.login()} replace />}
+          element={token ? <h1>Токен есть!</h1> : <Navigate to={routes.login()} replace />}
         />
         <Route path={routes.login()} element={<Login />} />
+        <Route path={routes.signup()} element={<Signup />} />
       </Routes>
     {/*</Router>*/}
     </HistoryRouter>

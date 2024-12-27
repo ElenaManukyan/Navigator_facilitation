@@ -1,33 +1,33 @@
 {
     "errors": {
-        "loginAuthErr": "Неверные имя пользователя или пароль",
-        "signupUserUnique": "Такой пользователь уже существует",
+        "loginAuthErr": "Invalid username or password",
+        "signupUserUnique": "Such a user already exists",
         "validation": {
-            "required": "Обязательное поле",
-            "usernameMinMaxLength": "От 3 до 20 символов",
-            "passwdMinLength": "Не менее 6 символов",
-            "confirmPasswdConfirm": "Пароли должны совпадать",
-            "unique": "Должно быть уникальным"
+            "required": "Required field",
+            "usernameMinMaxLength": "From 3 to 20 characters",
+            "passwdMinLength": "At least 6 characters",
+            "confirmPasswdConfirm": "Passwords must match",
+            "unique": "Must be unique"
         },
-        "error": "Ошибка",
-        "authErr": "Ошибка авторизации",
-        "signupErr": "Ошибка регистрации"
+        "error": "Error",
+        "authErr": "Authorization error",
+        "signupErr": "Registration error"
     },
     "navbar": {
-        "logo": "SeafarerDOC",
-        "logout": "Выйти"
+        "logo": "Navigator facilitation",
+        "logout": "Exit"
     },
     "login": {
-        "enter": "Войти",
-        "yourNickname": "Ваш ник",
-        "password": "Пароль",
-        "doYouHaveAccount": "Нет аккаунта?",
-        "signup": "Регистрация"
+        "enter": "Login",
+        "yourNickname": "Your nickname",
+        "password": "Password",
+        "doYouHaveAccount": "No account?",
+        "signup": "Sign up"
     },
     "signup": {
-        "username": "Имя пользователя",
-        "confirmPasswd": "Подтвердите пароль",
-        "signup": "Зарегистрироваться",
-        "input": "Вход"
+        "username": "Username",
+        "confirmPasswd": "Confirm the password",
+        "signup": "Sign up",
+        "input": "Login"
     }
 }

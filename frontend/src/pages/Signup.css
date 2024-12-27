@@ -1,0 +1,14 @@
+.placeholder1 {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    pointer-events: none;
+}
+
+input:focus+.placeholder1,
+input:not(:placeholder-shown)+.placeholder1 {
+    top: 0px;
+    left: 12px;
+    font-size: 13px;
+    color: #999;
+}

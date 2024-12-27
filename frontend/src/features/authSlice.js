@@ -9,12 +9,23 @@ export const getToken = (state) => state.auth.token;
 export const getAuthError = (state) => state.auth.error;
 export const getAuthStatus = (state) => state.auth.status;
 
-export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
+export const login = createAsyncThunk('/auth/login', async (data, { rejectWithValue }) => {
   try {
-    const response = await axios.post(routes.getLogin(), data);
+    const response = await axios.post(routes.login(), data);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message || i18next.t('errors.authErr'));
+  }
+});
+
+export const signup = createAsyncThunk('/auth/signup', async ({ username, password }, { rejectWithValue }) => {
+  try {
+    // console.log(`routes.signup()= ${routes.signup()}`);
+    const response = await axios.post(routes.signup(), { username, password });
+    console.log(`response= ${JSON.stringify(response, null, 2)}`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.message || i18next.t('errors.signupErr'));
   }
 });
 
@@ -64,7 +75,6 @@ const authSlice = createSlice({
         status: 'failed',
         error: action.payload,
       }))
-      /*
       .addCase(signup.pending, (state) => ({
         ...state,
         status: 'loading',
@@ -85,7 +95,7 @@ const authSlice = createSlice({
         ...state,
         status: 'failed',
         error: action.payload,
-      })); */
+      }));
   },
 });
 

@@ -3,8 +3,8 @@ const authPath = 'auth';
 
 const routes = {
   main: () => '/',
-  login: () => `${authPath}/login`,
-  signup: () => `${authPath}/register`,
+  login: () => `/${authPath}/login`,
+  signup: () => `/${authPath}/register`,
 };
 
 export default routes;
