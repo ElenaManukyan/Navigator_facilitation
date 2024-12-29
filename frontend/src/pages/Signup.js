@@ -59,6 +59,7 @@ const Signup = () => {
         navigate(routes.main());
       })
       .catch((err) => {
+        console.log(`err= ${JSON.stringify(err, null, 2)}`);
         // rollbar.error('Ошибка при регистрации:', error);
         if (Number(err.slice(-3)) === 409) {
           setError(`${t('errors.signupUserUnique')}`);

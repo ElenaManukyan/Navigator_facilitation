@@ -20,11 +20,11 @@ export const login = createAsyncThunk('/auth/login', async (data, { rejectWithVa
 
 export const signup = createAsyncThunk('/auth/signup', async ({ username, password }, { rejectWithValue }) => {
   try {
-    // console.log(`routes.signup()= ${routes.signup()}`);
     const response = await axios.post(routes.signup(), { username, password });
-    console.log(`response= ${JSON.stringify(response, null, 2)}`);
+    // console.log(`response= ${JSON.stringify(response, null, 2)}`);
     return response.data;
   } catch (error) {
+
     return rejectWithValue(error.message || i18next.t('errors.signupErr'));
   }
 });
