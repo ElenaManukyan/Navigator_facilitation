@@ -4,7 +4,9 @@
   "description": "An application for working with documents for seafarers",
   "main": "./frontend/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build --prefix frontend",
+    "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\""
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/ElenaManukyan/Navigator_facilitation/issues"
   },
-  "homepage": "https://github.com/ElenaManukyan/Navigator_facilitation#readme"
+  "homepage": "https://github.com/ElenaManukyan/Navigator_facilitation#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "start-server": "^0.0.4"
+  }
 }
