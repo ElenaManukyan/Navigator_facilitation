@@ -1,0 +1,19 @@
+{
+  "name": "seafarerdoc_clone",
+  "version": "1.0.0",
+  "description": "An application for working with documents for seafarers",
+  "main": "./frontend/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElenaManukyan/Navigator_facilitation.git"
+  },
+  "author": "Helena Manukyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElenaManukyan/Navigator_facilitation/issues"
+  },
+  "homepage": "https://github.com/ElenaManukyan/Navigator_facilitation#readme"
+}
