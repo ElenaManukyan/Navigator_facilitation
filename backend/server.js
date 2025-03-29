@@ -5,6 +5,11 @@ const userRoutes = require('./userRoutes');
 // const { Pool } = require("pg");
 require('dotenv').config(); // Подключение переменных окружения
 
+console.log('=== Application стартовала ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'установлен' : 'отсутствует');
+console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'установлен' : 'отсутствует');
+
 const app = express();
 
 // Middleware
