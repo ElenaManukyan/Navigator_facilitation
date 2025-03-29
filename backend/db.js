@@ -3,19 +3,18 @@ require('dotenv').config();
 
 // Подключение к PostgreSQL
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Простой запрос к базе данных для проверки
 pool.query('SELECT NOW()', (err, result) => {
     if (err) {
-      console.error('Ошибка выполнения запроса:', err);
+      console.error('Ошибка подключения к БД:', err);
     } else {
-      console.log('Результат запроса:', result.rows[0]);
+      console.log('Успешное подключение к PostgreSQL. Текущее время:', result.rows[0].now);
     }
 });
 
