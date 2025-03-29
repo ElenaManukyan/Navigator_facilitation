@@ -65,3 +65,9 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false } // Важно для Render PostgreSQL
 });
+
+// Проверка подключения
+pool.query('SELECT NOW()', (err) => {
+  if (err) console.error('Ошибка подключения к БД:', err);
+  else console.log('PostgreSQL подключена успешно');
+});
