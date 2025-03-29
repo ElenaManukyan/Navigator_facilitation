@@ -12,6 +12,7 @@ export const getAuthStatus = (state) => state.auth.status;
 export const login = createAsyncThunk('/auth/login', async (data, { rejectWithValue }) => {
   try {
     const response = await axios.post(routes.login(), data);
+    console.log('Ответ сервера:', response.data);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message || i18next.t('errors.authErr'));

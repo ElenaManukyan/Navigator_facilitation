@@ -5,10 +5,12 @@ console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
+  console.log('Получен запрос на регистрацию:', req.body);
 
   const { username, password, role } = req.body;
 
   if (!username || !password) {
+    console.log('Отсутствуют обязательные поля');
     return res.status(400).json({ error: 'Username and password are required' });
   }
 
@@ -29,9 +31,11 @@ exports.register = async (req, res) => {
       user: { id: newUser.id, username: newUser.username, role: newUser.role },
       token,
     });
+
+    console.log('Успешная регистрация:', user.username);
   } catch (err) {
-    console.error('Ошибка при регистрации пользователя:', err.message);
-    res.status(500).json({ error: 'Ошибка при регистрации пользователя' });
+    console.error('Ошибка регистрации:', err);
+    res.status(500).json({ error: 'Ошибка при регистрации пользователя', details: process.env.NODE_ENV === 'development' ? err.message : undefined });
   }
 };
 

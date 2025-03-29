@@ -21,7 +21,8 @@ app.use(cors({
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
-  credentials: true // Для куки/сессий
+  credentials: true, // Для куки/сессий
+  exposedHeaders: ['Authorization']
 }));
 // Позволяет серверу понимать и обрабатывать JSON-запросы
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use(express.json());
 // Установка лимита на тело запроса
 // app.use(express.json({ limit: '50kb' }));
 // Для данных, закодированных в URL
-app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+app.use(express.urlencoded({ extended: true }));
 
 // Подключение маршрутов
 // Все маршруты из routes.js будут доступны по префиксу /api
