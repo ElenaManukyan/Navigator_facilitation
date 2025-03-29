@@ -10,7 +10,7 @@ const app = express();
 // Разрешает кросс-доменные запросы
 app.use(cors({
   /*origin: 'http://localhost:3000', // Клиентский адрес*/
-  origin: ["https://navigator-facilitation.onrender.com"]
+  origin: 'https://navigator-facilitation.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
 }));
