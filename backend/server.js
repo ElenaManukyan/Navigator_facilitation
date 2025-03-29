@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const routes = require('./routes'); // Подключение маршрутов из routes.js
 const userRoutes = require('./userRoutes');
-// const { Pool } = require("pg");
 require('dotenv').config(); // Подключение переменных окружения
 
 console.log('=== Application стартовала ===');
@@ -31,6 +31,9 @@ app.use(express.json());
 // app.use(express.json({ limit: '50kb' }));
 // Для данных, закодированных в URL
 app.use(express.urlencoded({ extended: true }));
+
+// Если фронтенд - это React/Vue сборка
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Подключение маршрутов
 // Все маршруты из routes.js будут доступны по префиксу /api
@@ -64,6 +67,11 @@ app.use((req, res, next) => {
   next();
 });
 */
+
+// Обработка всех остальных запросов (для SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'src/index.js'));
+});
 
 
 app.get('/', (req, res) => {
