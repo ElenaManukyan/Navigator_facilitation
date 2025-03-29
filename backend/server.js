@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 
 // Обработка всех остальных запросов (для SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'src/index.js'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 
