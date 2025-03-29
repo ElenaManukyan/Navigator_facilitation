@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://your-backend-service.onrender.com",
+  "proxy": "https://navigator-facilitation-backend.onrender.com",
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
