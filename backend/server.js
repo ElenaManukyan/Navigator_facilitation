@@ -10,13 +10,21 @@ const app = express();
 // Middleware
 // Разрешает кросс-доменные запросы
 app.use(cors({
-  /*origin: 'http://localhost:3000', // Клиентский адрес*/
-  origin: 'https://navigator-facilitation.onrender.com',
+  origin: [
+    'https://navigator-facilitation.onrender.com',
+    'http://localhost:3000' // Для локальной разработки
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+  credentials: true // Для куки/сессий
 }));
 // Позволяет серверу понимать и обрабатывать JSON-запросы
 app.use(express.json());
+
+// Установка лимита на тело запроса
+// app.use(express.json({ limit: '50kb' }));
+// Для данных, закодированных в URL
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 
 // Подключение маршрутов
 // Все маршруты из routes.js будут доступны по префиксу /api
@@ -24,10 +32,10 @@ app.use(express.json());
 app.use('/api', routes);
 app.use('/auth', userRoutes);
 
-// Установка лимита на тело запроса
-app.use(express.json({ limit: '50kb' }));
-// Для данных, закодированных в URL
-app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+// Если ни один маршрут не подошел
+app.use((req, res) => {
+  res.status(404).json({ error: 'Не найдено' });
+});
 
 // Обработка ошибок в middleware
 app.use((err, req, res, next) => {
@@ -44,10 +52,12 @@ app.use((req, res, next) => {
 });
 
 // Middleware для проверки объёма cookies, которые передаются серверу
+/*
 app.use((req, res, next) => {
   console.log('Cookie:', req.headers.cookie);
   next();
 });
+*/
 
 
 app.get('/', (req, res) => {
@@ -60,17 +70,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });
-
-/*
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // Важно для Render PostgreSQL
-});
-
-// Проверка подключения
-pool.query('SELECT NOW()', (err) => {
-  if (err) console.error('Ошибка подключения к БД:', err);
-  else console.log('PostgreSQL подключена успешно');
-});
-*/
