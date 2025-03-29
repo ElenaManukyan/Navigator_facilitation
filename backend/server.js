@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routes = require('./routes'); // Подключение маршрутов из routes.js
 const userRoutes = require('./userRoutes');
+const { Pool } = require("pg");
 require('dotenv').config(); // Подключение переменных окружения
 
 const app = express();
@@ -58,4 +59,9 @@ const PORT = process.env.PORT || 5000;
 // Запуск сервера
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
+});
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false } // Важно для Render PostgreSQL
 });
