@@ -1,4 +1,4 @@
-const apiPath = 'api';
+// const apiPath = 'api';
 const authPath = 'auth';
 
 const routes = {

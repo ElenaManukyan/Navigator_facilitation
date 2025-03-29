@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  BrowserRouter as Router, Routes, Route, Navigate, unstable_HistoryRouter as HistoryRouter
+  Routes, Route, Navigate, unstable_HistoryRouter as HistoryRouter
 } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
