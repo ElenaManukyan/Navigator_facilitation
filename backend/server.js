@@ -11,7 +11,7 @@ const app = express();
 // Разрешает кросс-доменные запросы
 app.use(cors({
   origin: [
-    'https://navigator-facilitation.onrender.com',
+    'https://navigator-facilitation.onrender.com', // Фронтенд
     'http://localhost:3000' // Для локальной разработки
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
