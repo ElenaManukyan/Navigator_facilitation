@@ -1,6 +1,7 @@
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
@@ -36,32 +37,50 @@ exports.register = async (req, res) => {
 
 // Авторизация пользователя (вход)
 exports.login = async (req, res) => {
+  console.log('Получен запрос на вход:', req.body);
+
   const { username, password } = req.body;
 
   if (!username || !password) {
+    console.log('Отсутствует username или password');
     return res.status(400).json({ error: 'Username and password are required' });
   }
 
   try {
+    console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     const user = result.rows[0];
 
     if (!user) {
+      console.log('Пользователь не найден');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Проверка пароля
+    console.log('Сравнение паролей');
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
+      console.log('Пароль не совпадает');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Генерация JWT
+    console.log('Генерация токена');
     const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).json({ message: 'Login successful', token });
+    console.log('Отправка ответа с токеном');
+    // res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ 
+      message: 'Login successful', 
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        role: user.role
+      }
+    });
   } catch (err) {
     console.error('Ошибка при входе:', err.message);
     res.status(500).json({ error: 'Ошибка при входе' });
