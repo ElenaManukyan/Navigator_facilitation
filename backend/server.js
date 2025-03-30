@@ -75,6 +75,15 @@ app.get('/', (req, res) => {
   res.send('Добро пожаловать на сервер!');
 });
 
+app.post('/register', async (req, res) => {
+  try {
+    console.log('Данные регистрации:', req.body);
+    res.status(201).json({ message: 'Успешная регистрация' });
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
+
 // Если ни один маршрут не подошел
 app.use((req, res) => {
   res.status(404).json({ error: 'Не найдено' });
