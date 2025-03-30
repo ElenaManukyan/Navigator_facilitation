@@ -41,11 +41,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', routes);
 app.use('/auth', userRoutes);
 
-// Если ни один маршрут не подошел
-app.use((req, res) => {
-  res.status(404).json({ error: 'Не найдено' });
-});
-
 // Обработка ошибок в middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -78,6 +73,11 @@ app.get('*', (req, res) => {
 
 app.get('/', (req, res) => {
   res.send('Добро пожаловать на сервер!');
+});
+
+// Если ни один маршрут не подошел
+app.use((req, res) => {
+  res.status(404).json({ error: 'Не найдено' });
 });
 
 
