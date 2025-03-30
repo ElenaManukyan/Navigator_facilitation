@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 // Все маршруты из routes.js будут доступны по префиксу /api
 // Например, http://localhost:3000/api/vessels
 app.use('/api', routes);
-app.use('/auth', userRoutes);
+app.use('/', userRoutes);
 
 // Обработка ошибок в middleware
 app.use((err, req, res, next) => {
@@ -75,6 +75,7 @@ app.get('/', (req, res) => {
   res.send('Добро пожаловать на сервер!');
 });
 
+/*
 app.post('/register', async (req, res) => {
   try {
     console.log('Данные регистрации:', req.body);
@@ -83,6 +84,7 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
+*/
 
 // Если ни один маршрут не подошел
 app.use((req, res) => {
