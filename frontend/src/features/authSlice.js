@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
 import i18next from 'i18next';
 import routes from '../routes';
+import api from '../api/config';
 
 export const getIsAuthorized = (state) => state.auth.isAuthorized;
 export const getUsername = (state) => state.auth.username;
@@ -11,7 +12,7 @@ export const getAuthStatus = (state) => state.auth.status;
 
 export const login = createAsyncThunk('/auth/login', async (data, { rejectWithValue }) => {
   try {
-    const response = await axios.post(routes.login(), data);
+    const response = await api.post(routes.login(), data);
     console.log('Ответ сервера:', response.data);
     return response.data;
   } catch (error) {
@@ -21,7 +22,7 @@ export const login = createAsyncThunk('/auth/login', async (data, { rejectWithVa
 
 export const signup = createAsyncThunk('/auth/signup', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post(routes.signup(), { username, password });
+    const response = await api.post(routes.signup(), { username, password });
     // console.log(`response= ${JSON.stringify(response, null, 2)}`);
     return response.data;
   } catch (error) {
