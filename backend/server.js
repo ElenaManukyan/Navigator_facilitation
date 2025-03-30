@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Если фронтенд - это React/Vue сборка
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+// app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Подключение маршрутов
 // Все маршруты из routes.js будут доступны по префиксу /api
