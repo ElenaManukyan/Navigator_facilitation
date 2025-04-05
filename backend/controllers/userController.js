@@ -52,6 +52,10 @@ exports.login = async (req, res) => {
   }
 
   try {
+
+    console.error("Тестовый лог " + new Date().toISOString()); // error логи выводятся быстрее
+    process.stdout.write("Принудительный вывод\n"); // сброс буфера
+
     console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
