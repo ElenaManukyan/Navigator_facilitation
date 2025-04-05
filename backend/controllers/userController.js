@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
     console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    console.log(`result= ${result}`);
+    console.log(`result= ${JSON.stringify(result, null, 2)}`);
     const user = result.rows[0];
 
     if (!user) {
@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
 
     // Проверка пароля
     console.log('Сравнение паролей');
-    console.log(`user= ${user}`);
+    console.log(`user= ${JSON.stringify(user, null, 2)}`);
     console.log('Хеш из БД:', user.password);
     const isMatch = await bcrypt.compare(
       password.trim(),
