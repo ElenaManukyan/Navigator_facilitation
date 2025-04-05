@@ -44,6 +44,7 @@ exports.login = async (req, res) => {
   console.log('Получен запрос на вход:', req.body);
 
   const { username, password } = req.body;
+  console.log('Введённый пароль:', `"${password}"`);
 
   if (!username || !password) {
     console.log('Отсутствует username или password');
@@ -54,23 +55,25 @@ exports.login = async (req, res) => {
     console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    console.log(`result= ${result}`);
     const user = result.rows[0];
 
-    
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
 
     // Проверка пароля
     console.log('Сравнение паролей');
-    const isMatch = await bcrypt.compare(password, user.password);
+    console.log(`user= ${user}`);
+    console.log('Хеш из БД:', user.password);
+    const isMatch = await bcrypt.compare(
+      password.trim(),
+      user.password.trim()
+    );
 
-    
-    if (!user) {
-      console.log('Пользователь не найден');
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
 
     if (!isMatch) {
-      console.log('Пароль не совпадает');
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid password' });
     }
 
     // Генерация JWT
