@@ -66,12 +66,22 @@ exports.login = async (req, res) => {
     console.log('Сравнение паролей');
     console.log(`user= ${JSON.stringify(user, null, 2)}`);
     console.log('Хеш из БД:', user.password);
+    console.log('Длина пароля:', password.length); // Для 'admin' должно быть 5
+    console.log('HEX пароля:', Buffer.from(password).toString('hex'));
+    
     const isMatch = await bcrypt.compare(
       password.trim(),
-      user.password.trim()
+      user.password
     );
     console.log(`isMatch= ${isMatch}`);
 
+
+    const testPassword = 'admin'; // Пароль, который должен подходить
+    const testHash = '$2b$10$yrtHjacabNIth2vAhP/f3ulAOeu3y7xBiEAnUbW1ySnMegGI8.3jy';
+
+    const manualCheck = await bcrypt.compare(testPassword, testHash);
+    console.log('Ручная проверка:', manualCheck); // Должно быть true
+    console.log('Сравнение хешей:', user.password === testHash); // Должно быть true
 
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid password' });
