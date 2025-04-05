@@ -56,14 +56,17 @@ exports.login = async (req, res) => {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     const user = result.rows[0];
 
-    if (!user) {
-      console.log('Пользователь не найден');
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
+    
 
     // Проверка пароля
     console.log('Сравнение паролей');
     const isMatch = await bcrypt.compare(password, user.password);
+
+    
+    if (!user) {
+      console.log('Пользователь не найден');
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
     if (!isMatch) {
       console.log('Пароль не совпадает');
