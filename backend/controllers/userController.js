@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
     console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    console.log(`result= ${JSON.stringify(result, null, 2)}`);
+    // console.log(`result= ${JSON.stringify(result, null, 2)}`);
     const user = result.rows[0];
 
     if (!user) {
@@ -70,6 +70,7 @@ exports.login = async (req, res) => {
       password.trim(),
       user.password.trim()
     );
+    console.log(`isMatch= ${isMatch}`);
 
 
     if (!isMatch) {
