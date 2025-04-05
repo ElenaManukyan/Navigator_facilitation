@@ -11,7 +11,6 @@ const pool = new Pool({
 
 // Простой запрос к базе данных для проверки
 pool.query('SELECT NOW()', (err, result) => {
-    console.log('Подключены к БД:', err ? err : res.rows[0].current_database);
     if (err) {
       console.error('Ошибка подключения к БД:', err);
     } else {
