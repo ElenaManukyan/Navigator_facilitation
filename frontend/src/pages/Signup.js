@@ -31,7 +31,7 @@ const Signup = () => {
     password: yup
       .string()
       .required(`${t('errors.validation.required')}`)
-      .min(6, `${t('errors.validation.passwdMinLength')}`),
+      .min(5, `${t('errors.validation.passwdMinLength')}`),
 
     confirmPassword: yup
       .string()

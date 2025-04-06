@@ -5,7 +5,7 @@
         "validation": {
             "required": "Required field",
             "usernameMinMaxLength": "From 3 to 20 characters",
-            "passwdMinLength": "At least 6 characters",
+            "passwdMinLength": "At least 5 characters",
             "confirmPasswdConfirm": "Passwords must match",
             "unique": "Must be unique"
         },
