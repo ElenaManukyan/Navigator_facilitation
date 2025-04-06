@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
     // Проверка пароля
     console.log('Сравнение паролей');
     console.log(`user= ${JSON.stringify(user, null, 2)}`);
-    console.log('Хеш из БД:', user.password);
+    
     console.log('Длина пароля:', password.length); // Для 'admin' должно быть 5
     console.log('HEX пароля:', Buffer.from(password).toString('hex'));
     
@@ -83,6 +83,9 @@ exports.login = async (req, res) => {
     const testPassword = 'admin'; // Пароль, который должен подходить
     const testHash = '$2b$10$yrtHjacabNIth2vAhP/f3ulAOeu3y7xBiEAnUbW1ySnMegGI8.3jy';
     const testHash2 = await bcrypt.hash(testPassword, 10);
+
+    console.log('Хеш из БД:', user.password);
+    console.log('Хеш testHash2:', testHash2);
 
     const manualCheck = await bcrypt.compare(testPassword, testHash2); // compare создает другой хэш, отличный от того, что хранится в бд!
     console.log('Ручная проверка:', manualCheck); // Должно быть true
