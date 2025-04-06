@@ -20,9 +20,7 @@ app.use(cors({
     'http://localhost:3000' // Для локальной разработки
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
-  allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
   credentials: true, // Для куки/сессий
-  exposedHeaders: ['Authorization']
 }));
 // Позволяет серверу понимать и обрабатывать JSON-запросы
 app.use(express.json());
