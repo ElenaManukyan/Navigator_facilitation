@@ -30,6 +30,13 @@ app.use(express.json());
 // Для данных, закодированных в URL
 app.use(express.urlencoded({ extended: true }));
 
+
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+
 // Если фронтенд - это React/Vue сборка
 // app.use(express.static(path.join(__dirname, '../frontend/build')));
 
@@ -88,12 +95,6 @@ app.post('/register', async (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Не найдено' });
 });
-
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
 
 const PORT = process.env.PORT || 5000;
 // Запуск сервера
