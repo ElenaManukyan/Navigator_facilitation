@@ -82,10 +82,11 @@ exports.login = async (req, res) => {
 
     const testPassword = 'admin'; // Пароль, который должен подходить
     const testHash = '$2b$10$yrtHjacabNIth2vAhP/f3ulAOeu3y7xBiEAnUbW1ySnMegGI8.3jy';
+    const testHash2 = await bcrypt.hash(testPassword, 10);
 
-    const manualCheck = await bcrypt.compare(testPassword, testHash);
+    const manualCheck = await bcrypt.compare(testPassword, testHash2); // compare создает другой хэш, отличный от того, что хранится в бд!
     console.log('Ручная проверка:', manualCheck); // Должно быть true
-    console.log('Сравнение хешей:', user.password === testHash); // Должно быть true
+    console.log('Сравнение хешей:', user.password === testHash2); // Должно быть true
 
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid password' });
