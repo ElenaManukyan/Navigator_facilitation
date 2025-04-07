@@ -52,45 +52,19 @@ exports.login = async (req, res) => {
   }
 
   try {
-
-    console.error("Тестовый лог " + new Date().toISOString()); // error логи выводятся быстрее
-    process.stdout.write("Принудительный вывод\n"); // сброс буфера
-
-    console.log('Попытка найти пользователя:', username);
     // Проверка, существует ли пользователь
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    // console.log(`result= ${JSON.stringify(result, null, 2)}`);
     const user = result.rows[0];
 
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
 
-    // Проверка пароля
-    console.log('Сравнение паролей');
-    console.log(`user= ${JSON.stringify(user, null, 2)}`);
-    
-    console.log('Длина пароля:', password.length); // Для 'admin' должно быть 5
-    console.log('HEX пароля:', Buffer.from(password).toString('hex'));
-    
     const isMatch = await bcrypt.compare(
       password.trim(),
       user.password
     );
-    console.log(`isMatch= ${isMatch}`);
-
-
-    const testPassword = 'admin'; // Пароль, который должен подходить
-    const testHash = '$2b$10$yrtHjacabNIth2vAhP/f3ulAOeu3y7xBiEAnUbW1ySnMegGI8.3jy';
-    const testHash2 = await bcrypt.hash(testPassword, 10);
-
-    console.log('Хеш из БД:', user.password);
-    console.log('Хеш testHash2:', testHash2);
-
-    const manualCheck = await bcrypt.compare(testPassword, testHash2); // compare создает другой хэш, отличный от того, что хранится в бд!
-    console.log('Ручная проверка:', manualCheck); // Должно быть true
-    console.log('Сравнение хешей:', user.password === testHash2); // Должно быть true
-
+ 
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid password' });
     }

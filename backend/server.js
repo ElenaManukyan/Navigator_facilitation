@@ -5,11 +5,6 @@ const routes = require('./routes'); // Подключение маршрутов
 const userRoutes = require('./userRoutes');
 require('dotenv').config(); // Подключение переменных окружения
 
-console.log('=== Application стартовала ===');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'установлен' : 'отсутствует');
-console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'установлен' : 'отсутствует');
-
 const app = express();
 
 // Middleware
@@ -30,27 +25,16 @@ app.use(express.json());
 // Для данных, закодированных в URL
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
-
-
-// Если фронтенд - это React/Vue сборка
-// app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Подключение маршрутов
 // Все маршруты из routes.js будут доступны по префиксу /api
 // Например, http://localhost:3000/api/vessels
 app.use('/api', routes);
 app.use('/', userRoutes);
-
-// Обработка ошибок в middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Что-то пошло не так!' });
-});
 
 // Middleware для логирования всех запросов на сервере
 app.use((req, res, next) => {
@@ -60,40 +44,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware для проверки объёма cookies, которые передаются серверу
-/*
-app.use((req, res, next) => {
-  console.log('Cookie:', req.headers.cookie);
-  next();
-});
-*/
-
-// Обработка всех остальных запросов (для SPA)
-/*
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-*/
-
-
 app.get('/', (req, res) => {
   res.send('Добро пожаловать на сервер!');
 });
 
-/*
-app.post('/register', async (req, res) => {
-  try {
-    console.log('Данные регистрации:', req.body);
-    res.status(201).json({ message: 'Успешная регистрация' });
-  } catch (error) {
-    res.status(500).json({ error: 'Ошибка сервера' });
-  }
-});
-*/
-
 // Если ни один маршрут не подошел
 app.use((req, res) => {
   res.status(404).json({ error: 'Не найдено' });
+});
+
+// Обработка ошибок в middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Что-то пошло не так!' });
 });
 
 const PORT = process.env.PORT || 5000;
